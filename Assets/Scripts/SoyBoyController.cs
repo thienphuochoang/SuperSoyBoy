@@ -5,6 +5,7 @@ using UnityEngine;
 typeof(Animator))]
 public class SoyBoyController : MonoBehaviour
 {
+    public float airAccel = 3f;
     public float jumpDurationThreshold = 0.25f;
     private float jumpDuration;
     public float speed = 14f;
@@ -89,10 +90,18 @@ public class SoyBoyController : MonoBehaviour
     void FixedUpdate()
     {
         // 1
-        var acceleration = accel;
+        var acceleration = 0f;
+        if (PlayerIsOnGround())
+        {
+            acceleration = accel;
+        }
+        else
+        {
+            acceleration = airAccel;
+        }
         var xVelocity = 0f;
         // 2
-        if (input.x == 0)
+        if (PlayerIsOnGround() && input.x == 0)
         {
             xVelocity = 0f;
         }
